@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-PythonShell.run('generator.py', function (err) {
+PythonShell.run('py/generator.py', function (err) {
   if (err) throw err;
   console.log('finished');
 });
