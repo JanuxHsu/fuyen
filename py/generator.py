@@ -3,9 +3,11 @@ __author__ = 'Steve'
 import random
 import json
 import os
+
 script_dir = os.path.dirname(__file__)
 rel_path = "input.json"
 abs_file_path = os.path.join(script_dir, rel_path)
+
 
 def random_out(any_list, prob=0.5):
     return random.choice(any_list) if random.random() < prob else ""
@@ -29,7 +31,8 @@ def random_pick(any_list, num=1):
 class Pattern:
     def __init__(self):
         with open(abs_file_path, "r") as input_file:
-            self.input_json = json.load(input_file)
+            self.input_json = json.load(input_file, encoding="utf-8")
+
             self.topics = self.input_json["patterns"].keys()
 
     def generate(self, pattern_type):
@@ -58,15 +61,21 @@ class Pattern:
         return comma.join(result) + random_out(period)
 
     def generate_all(self, number_of_sentence):
-        print "hello from the outer side"
-        # for index,topic in enumerate(self.topics):
-        #     print("[{}]".format(index)),
-        #     print(topic)
-        #     for i in range(0, number_of_sentence):
-        #         print("\t[{}]".format(i)),
-        #         print(self.generate(topic))
+        results = []
+        for index, topic in enumerate(self.topics):
+            result = {}
+            result["topic"]=topic
+            # print(str(topic))
+            result["sentences"] = []
+
+            for i in range(0, number_of_sentence):
+                result["sentences"].append(self.generate(topic))
+            results.append(result)
+        return results
 
 
 if __name__ == '__main__':
     p = Pattern()
-    p.generate_all(5)
+    result = p.generate_all(5)
+    x=json.dumps(result, ensure_ascii=False).encode('utf-8')
+    print(x)
