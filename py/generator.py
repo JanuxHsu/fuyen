@@ -2,8 +2,10 @@
 __author__ = 'Steve'
 import random
 import json
-from pprint import pprint
-
+import os
+script_dir = os.path.dirname(__file__)
+rel_path = "input.json"
+abs_file_path = os.path.join(script_dir, rel_path)
 
 def random_out(any_list, prob=0.5):
     return random.choice(any_list) if random.random() < prob else ""
@@ -26,7 +28,7 @@ def random_pick(any_list, num=1):
 
 class Pattern:
     def __init__(self):
-        with open("input.json", "r") as input_file:
+        with open(abs_file_path, "r") as input_file:
             self.input_json = json.load(input_file)
             self.topics = self.input_json["patterns"].keys()
 
