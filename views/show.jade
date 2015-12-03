@@ -1,6 +1,7 @@
 extends layout
 block show
   h2 唬爛產生器
+  button(onclick="window.location.reload()") 更新
   each item in data
     div
       p #{item.topic}
