@@ -10,6 +10,7 @@ var users = require('./routes/users');
 
 
 var PythonShell = require('python-shell');
+var fuyen = new PythonShell('py/generator.py');
 
 var app = express();
 
@@ -25,12 +26,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//======================================================================
+fuyen.on('message', function (message) {
+  // received a message sent from the Python script (a simple "print" statement)
+  console.log(message);
+});
 
-
-PythonShell.run('py/generator.py', function (err) {
+// end the input stream and allow the process to exit
+fuyen.end(function (err) {
   if (err) throw err;
   console.log('finished');
 });
+
+
+//======================================================================
 
 app.use('/', routes);
 app.use('/users', users);

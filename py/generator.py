@@ -58,12 +58,13 @@ class Pattern:
         return comma.join(result) + random_out(period)
 
     def generate_all(self, number_of_sentence):
-        for index,topic in enumerate(self.topics):
-            print("[{}]".format(index)),
-            print(topic)
-            for i in range(0, number_of_sentence):
-                print("\t[{}]".format(i)),
-                print(self.generate(topic))
+        print "hello from the outer side"
+        # for index,topic in enumerate(self.topics):
+        #     print("[{}]".format(index)),
+        #     print(topic)
+        #     for i in range(0, number_of_sentence):
+        #         print("\t[{}]".format(i)),
+        #         print(self.generate(topic))
 
 
 if __name__ == '__main__':
