@@ -5,12 +5,15 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var PythonShell = require('python-shell');
+
+
+
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
 
-var PythonShell = require('python-shell');
-var fuyen = new PythonShell('py/generator.py');
 
 var app = express();
 
@@ -26,23 +29,22 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//======================================================================
-fuyen.on('message', function (message) {
-  // received a message sent from the Python script (a simple "print" statement)
-  console.log(message);
+
+app.get('/show', function(req, res){
+  var fuyen = new PythonShell('py/generator.py', { mode: 'json'});
+  fuyen.on('message', function (message) {
+    //console.log(message[0]);
+    res.render('show', {data:message});
+  });
+
 });
-
-// end the input stream and allow the process to exit
-fuyen.end(function (err) {
-  if (err) throw err;
-  console.log('finished');
-});
-
-
-//======================================================================
 
 app.use('/', routes);
 app.use('/users', users);
+
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

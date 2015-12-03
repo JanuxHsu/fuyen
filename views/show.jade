@@ -1,0 +1,10 @@
+extends layout
+block show
+  p Temp
+  each item in data
+    div
+      p #{item.topic}
+      ul
+        each i in item.sentences
+          li #{i}
+   
