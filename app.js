@@ -8,6 +8,9 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
+
+var PythonShell = require('python-shell');
+
 var app = express();
 
 // view engine setup
@@ -22,6 +25,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+
+PythonShell.run('generator.py', function (err) {
+  if (err) throw err;
+  console.log('finished');
+});
 
 app.use('/', routes);
 app.use('/users', users);
