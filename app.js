@@ -31,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.get('/show', function(req, res){
+  console.log(req.connections);
   var fuyen = new PythonShell('py/generator.py', { mode: 'json'});
   fuyen.on('message', function (message) {
     //console.log(message[0]);
